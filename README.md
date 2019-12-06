@@ -35,7 +35,7 @@ Under Windows, with Visual Studio:
 - Clone the repository
 - Copy all the files from coinor-dylp to DyLP-1.10.4 (for example)
 - In DyLP-1.10.4 create a build directory (mkdir build)
-- In DyLP-1.10.4/build, launch 'cmake -DCMAKE_INSTALL_PREFIX=/opt/dylp-1.10.4 -DCMAKE_BUILD_TYPE=RELEASE -G "NMake Makefiles" ..'
+- In DyLP-1.10.4/build, launch 'cmake -DCMAKE_INSTALL_PREFIX=d:/dylp-1.10.4 -DCMAKE_BUILD_TYPE=RELEASE -G "NMake Makefiles" ..'
 - In DyLP-1.10.4/build, launch 'cmake-gui .' to fine tune the configuration
 - Make the libraries: nmake
 - Install the libraries: nmake install
@@ -172,7 +172,7 @@ Be careful to activate the right set of tests (not the long one).
  c:/MinGW64/MinGW64/bin/mingw32-make.exe install
 ```
 
-- copy libgfortran-3.dll libquadmath-0.dll libgcc_s_seh-1.dll libwinpthread.dll from c:\MinGW64\MinGW64\bin to
+ - copy libgfortran-3.dll libquadmath-0.dll libgcc_s_seh-1.dll libwinpthread.dll from c:\MinGW64\MinGW64\bin to
    c:/lapack-3.7.0/bin
  - zip c:/lapack-3.7.0 to lapack-3.7.0.zip
 
@@ -246,7 +246,7 @@ Date:   Thu Oct 21 01:03:09 2004 +0000
 
 $ git tag first_commit 2dc3ded2d97f2c889ae7baafa49128d2bec1f25b
 
-$ cmake -DCMAKE_INSTALL_PREFIX=/opt/coinmp-devel -DCMAKE_BUILD_TYPE=RELEASE ..
+$ cmake -DCMAKE_INSTALL_PREFIX=/opt/dylp-devel -DCMAKE_BUILD_TYPE=RELEASE ..
 
 # To do
 
