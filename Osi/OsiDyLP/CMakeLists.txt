@@ -1,3 +1,27 @@
+#
+# pkg-config file generation
+#
+
+set(prefix               "${CMAKE_INSTALL_PREFIX}")
+set(exec_prefix          "\${prefix}")
+set(libdir               "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+set(includedir           "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
+set(PACKAGE_VERSION      "${CLP_VERSION}")
+
+configure_file(${DyLP_DIR}/src/OsiDylp/osi-dylp.pc.in ${CMAKE_BINARY_DIR}/DyLP/osi-dylp.pc @ONLY)
+
+set(libdir         "${DyLP_DIR}")
+set(abs_source_dir "${CMAKE_BINARY_DIR}/bin")
+
+configure_file(${DyLP_DIR}/src/OsiDylp/osi-dylp-uninstalled.pc.in ${CMAKE_BINARY_DIR}/DyLP/osi-dylp-uninstalled.pc @ONLY)
+
+install(FILES ${CMAKE_BINARY_DIR}/DyLP/osi-dylp.pc
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/pkg-config/)
+
+#
+# Build
+#
+
 include_directories(${BuildTools_DIR}/headers)
 include_directories(${CoinUtils_DIR}/src)
 include_directories(${DyLP_DIR}/src/Dylp)
@@ -34,9 +58,11 @@ endif ()
 set_include_directories(libOsiDyLP)
 
 install(TARGETS libOsiDyLP 
-        DESTINATION lib)
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/static)
 
 install(FILES ${DyLP_DIR}/src/OsiDylp/OsiDylpMessages.hpp
               ${DyLP_DIR}/src/OsiDylp/OsiDylpSolverInterface.hpp
               ${DyLP_DIR}/src/OsiDylp/OsiDylpWarmStartBasis.hpp
-        DESTINATION include/coin)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/coin)

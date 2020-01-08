@@ -43,6 +43,31 @@ endif ()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in ${CMAKE_BINARY_DIR}/DyLP/include/config_dylp.h)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in ${CMAKE_BINARY_DIR}/DyLP/include/config.h)
 
+#
+# pkg-config file generation
+#
+
+set(prefix           "${CMAKE_INSTALL_PREFIX}")
+set(exec_prefix      "\${prefix}")
+set(libdir           "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+set(includedir       "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
+set(DYLPLIB_PCLIBS   "")
+set(PACKAGE_VERSION   "${DYLP_VERSION}")
+
+configure_file(${DyLP_DIR}/dylp.pc.in ${CMAKE_BINARY_DIR}/DyLP/dylp.pc @ONLY)
+
+set(libdir         "${DyLP_DIR}")
+set(abs_source_dir "${CMAKE_BINARY_DIR}/bin")
+
+configure_file(${DyLP_DIR}/dylp-uninstalled.pc.in ${CMAKE_BINARY_DIR}/DyLP/dylp-uninstalled.pc @ONLY)
+
+install(FILES ${CMAKE_BINARY_DIR}/DyLP/dylp.pc
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/pkg-config/)
+
+#
+# Build
+#
+
 set(DyLPSTDLIB_SRC_LIST ${DyLP_DIR}/src/DylpStdLib/dylib_binsrch.c
                         ${DyLP_DIR}/src/DylpStdLib/dylib_bnfrdrio.c
                         ${DyLP_DIR}/src/DylpStdLib/dylib_hash.c
@@ -183,14 +208,16 @@ if (DYLP_BUILD_EXAMPLES)
 endif () 
 
 install(TARGETS libDyLP 
-        DESTINATION lib)
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/static)
 
 install(FILES ${DyLP_SRC_LIST_Headers} 
-        DESTINATION include/coin)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/coin)
 
 install(FILES ${CMAKE_BINARY_DIR}/DyLP/include/config.h
-        DESTINATION include/coin
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/coin
         RENAME DyLPConfig.h)
 
 install(FILES ${CMAKE_BINARY_DIR}/DyLP/include/config.h
-        DESTINATION include/coin)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/coin)

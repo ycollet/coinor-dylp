@@ -135,6 +135,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 include(coin-macros)
 include(GetAcInitVersion)
 include(CheckCLinkerFlag)
+include(GNUInstallDirs)
 
 Enable_Testing ()
 
@@ -839,7 +840,7 @@ subdirs(Osi/OsiDyLP)
 
 if (WIN32)
   install(DIRECTORY ${CMAKE_BINARY_DIR}/bin
-          DESTINATION bin
+          DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}
           PATTERN "*.dll")
 endif ()
 
